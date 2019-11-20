@@ -26,7 +26,12 @@ router.post('/', function(req, res) {
     options,
     function(err, response, body) {
       var userData = JSON.parse(body);
-      res.render('index', {userData});
+      options.url=userData.repos_url;
+      request(options, function(err, response, body){
+        userData.repos = JSON.parse(body);  
+        res.render('index', {userData});
+
+      });
     }
   );
 });
